@@ -1,5 +1,4 @@
 var NoiseGen = function(num_octs,attenuation, roughness,starting_oct){
-
 	var look = [];
 	for(var i=0;i<256;i++){
 		look[i] = Math.floor(Math.random()*256);
@@ -104,7 +103,7 @@ var texture_factory = function(size,data){
 
 	//Do the noise stuff here
 	for(var i=0;i<data.noise.length;i++){
-		var noisy_index = data.nose[i];
+		var noisy_index = data.noise[i];
 		var noise_gen = new NoiseGen(noisy_index.num_octs, noisy_index.attenuation, noisy_index.roughness, noisy_index.starting_oct);
 		var point = 0;
 		for(var y=0;y<size;y++){
