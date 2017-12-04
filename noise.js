@@ -7,30 +7,23 @@ App = function()
  		wade.loadScene('scene1.wsc', true, function()
         {
              // the scene has been loaded, do something here
-         	var grass = 
- 			{
- 				baseColor: [53,161,27,255], noise: 
- 				[
- 					{
- 						color: [95, 235, 61, 180], 
- 						attenuation: 2, 
- 						roughness: 2,
- 						numOctaves: 3,
- 						startingOctave: 2
- 					},
- 					{
- 						color: [200, -60, 0, 2550], 
- 						attenuation: 2, 
- 						roughness: 2,
- 						numOctaves: 5,
- 						startingOctave: 2
- 					}
- 				]
- 			};
-         	wade.setImage('grass', texture_factory(256, grass));
-         	var obj = new SceneObject(new Sprite('grass'));
-         	wade.addSceneObject(obj);
-             
+			var test =
+			{
+				baseColor: [202,177,50,255],
+				noise:
+					[
+						{
+							color: [235, 221, 61, 1024],
+							attenuation: 1.5,
+							roughness: 2,
+							num_octs: 4,
+							starting_oct: 2
+						}
+					]
+			};
+			wade.setImage('test',texture_factory(256,test));
+			var obj = new SceneObject(new Sprite('test'))
+			wade.addSceneObject(obj);
          });
  	};
  };
