@@ -7,8 +7,8 @@ App = function()
  		wade.loadScene('scene1.wsc', true, function()
         {
              // the scene has been loaded, do something here
-/*
 			//This is the alpha channel
+/*
 			var test =
 			{
 				baseColor:[0,0,0,100],
@@ -16,7 +16,6 @@ App = function()
 				[
 					{
 						color:[255,255,255,3750],
-						//this makes me darker
 						attenuation: 1.2,
 						roughness: 1.7,
 						num_octs: 8,
@@ -28,7 +27,6 @@ App = function()
 			var obj = new SceneObject(new Sprite('test'))
 			wade.addSceneObject(obj);
 */
-/*
 			var g_channel = 
 			{
 				baseColor:[0,0,0,100],
@@ -46,7 +44,6 @@ App = function()
 			wade.setImage('g_channel',texture_factory(256,g_channel));
 			var obj = new SceneObject(new Sprite('g_channel'));
 			wade.addSceneObject(obj);
-*/
 /*
 			var r_channel = 
 			{

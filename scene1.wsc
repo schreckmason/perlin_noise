@@ -57,6 +57,6 @@
 	"windowMode": "full",
 	"defaultLayer": 1,
 	"scripts": [
-		"perlin.js"
+		"perlin_noise.js"
 	]
 }

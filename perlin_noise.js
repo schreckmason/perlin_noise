@@ -1,10 +1,11 @@
-//Double the length of the lookup if need be
+//Fahrenheit to celsius conversion similar to GLSL mix
 var lin_interpolate = function(a,b,t){
 	return (1-t)*a + t*b;
 };
-	//Experiment with more than this on ease curve
-var fade = function(t){
-	return t * t * t * ( t * ( t * 6-15)+10)
+
+//ease curve
+var fade = function(x){
+	return x * x * x * ( x * ( x * 6-15)+10)
 };
 
 var grad3 = [
@@ -67,21 +68,25 @@ var NoiseGen = function(num_octs, attenuation, roughness, starting_oct){
 		var noise_ind110 = dot_function(grad3[grad_ind110],x-1,y-1,z);
 		var noise_ind111 = dot_function(grad3[grad_ind111],x-1,y-1,z-1);
 
+		//Apply fade since linear interpolation does not look natural, and is choppy
 		var u = fade(x);
 		var v = fade(y);
 		var w = fade(z);
 
+		//Interpolate along x and apply fade
 		var x_inter00 = lin_interpolate(noise_ind000,noise_ind100,u);
 		var x_inter01 = lin_interpolate(noise_ind001,noise_ind101,u);
 		var x_inter10 = lin_interpolate(noise_ind010,noise_ind110,u);
 		var x_inter11 = lin_interpolate(noise_ind011,noise_ind111,u);
 
+		//Interpolate along y and apply fade
 		var y_inter0 = lin_interpolate(x_inter00,x_inter10,v);
 		var y_inter1 = lin_interpolate(x_inter01,x_inter11,v);
 
 		return lin_interpolate(y_inter0,y_inter1,w);
 	};
 
+	//This is the interesting part: octaves, attenuation, roughness and starting octave
 	this.noise = function(x,y,z){
 		var a = Math.pow(attenuation, -starting_oct);
 		var r = Math.pow(roughness, starting_oct);
@@ -95,6 +100,8 @@ var NoiseGen = function(num_octs, attenuation, roughness, starting_oct){
 	};
 };
 
+//This is a function to handle the actual construction of textures outsid of the maths
+//Note: can view the structure of the data input within noise.js
 var texture_factory = function(size,data){
 	var canvas = document.createElement('canvas');
 	//make a square canvase
@@ -119,15 +126,17 @@ var texture_factory = function(size,data){
 		var point = 0;
 		for(var y=0;y < size; y++){
 			for(var x=0;x < size; x++){
+				//generate noise at a given coordinate
 				var nvector = Math.abs(noise_gen.noise(x/size,y/size,0));
 				for(var c=0;c<3;c++, point++){
+					//The image data at a given location, take each R,G,B, and A vlue and apply the noise algorithm, take the alpha value and divide by 255
 					image_data[point] = Math.floor(image_data[point]+nvector*noisy_index.color[c] * noisy_index.color[3]/255);
 				}
 				point++;
 			}
 		}
 	}
-	
+	//Load image to canvas
 	context.putImageData(imagedata_object,0,0);
 	return canvas;
 };
